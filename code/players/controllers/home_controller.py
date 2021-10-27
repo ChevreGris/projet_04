@@ -1,4 +1,4 @@
-from views.home_view import HomeView
+from players.views.home_view import HomeView
 
 
 class HomePageController:
