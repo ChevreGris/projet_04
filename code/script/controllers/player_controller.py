@@ -1,5 +1,5 @@
-from script.models.player import Player
-from script.views.player_view import PlayerView
+from models.player import Player
+from views.player_view import PlayerView
 
 
 class PlayerController:
