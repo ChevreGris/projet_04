@@ -12,4 +12,11 @@ class HomePageController:
             next = "list_player"
         elif choice == "2":
             next = "new_player"
+        else:
+            next = "homepage"
+            print("invalid value")
+            
+
         return next, None
+
+

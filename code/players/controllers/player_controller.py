@@ -19,19 +19,13 @@ class PlayerController:
         elif choice.lower() == "h":
             return "homepage", None
         else:
-            raise Exception("invalid choice")
+            return "list_player", None
 
     @classmethod
     def create(cls, store, route_params=None):
-        # call the view that will return us a dict with the new player info
+
         data = PlayerView.create_player()
-
-        # You could specify each argument like:
-        # player = Player(id=data["id"], name=data["name"], age=data["age"])
-        # but it's easier to use `**` to pass the arguments
         player = Player(**data)
-
-        # we add the player to the store
         store["players"].append(player)
 
         return "list_player", None
