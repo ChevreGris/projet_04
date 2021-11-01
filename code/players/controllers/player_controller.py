@@ -14,11 +14,12 @@ class PlayerController:
             return "new_player", None
         elif choice == "3":
             return "delete_player", player_id
-        elif choice.lower() == "q":
+        elif choice == "4":
             return "quit", None
         elif choice.lower() == "h":
             return "homepage", None
         else:
+            print("invalid value")
             return "list_player", None
 
     @classmethod
@@ -54,3 +55,19 @@ class PlayerController:
             return "quit", None
         elif choice.lower() == "h":
             return "homepage", None
+        elif choice == "1":
+            return "edit_player", None
+        else:
+            print("invalid value")
+            return "view_player", None
+    
+    @classmethod
+    def edit(cls, store=None, route_params=None):
+        choice = PlayerView.edit_player()
+        if choice.lower() == "q":
+            return "quit", None
+        elif choice.lower() == "h":
+            return "homepage", None
+        else:
+            print("invalid value")
+            return "edit_player", None

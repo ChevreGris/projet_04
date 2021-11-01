@@ -5,15 +5,16 @@ class PlayerView:
 
     @classmethod
     def display_list(cls, players):
-        print("\tID\tName\tAge")
+        print("     ---------------------------------")
+        print("     [\tID\tName\t\tAge  ]")
+        print("     ---------------------------------")
         for player in players:
-            print(f"\t{player.id}\t{player.name}\t{player.age}")
-
+            print(f"     [\t{player.id}\t{player.name}\t\t{player.age}   ]")
+        print("     ---------------------------------")
+        print("")
         print("1. View Player")
-        print("2. New Player")
-        print("3. Delete Player")
-        print("Q. Exit")
-        print("H. Homepage")
+        print("2. New Player                H. Homepage")
+        print("3. Delete Player             Q. Exit")
 
         choice = input("Choice:")
         extra_info = None
@@ -25,11 +26,18 @@ class PlayerView:
 
     @classmethod
     def detail_player(cls, player):
-        print(f"Id: {player.id}")
-        print(f"Name: {player.name}")
-        print(f"Age: {player.age}")
-        print(f"Email: {player.email}")
-
+        print("     Player info :")
+        print("    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
+        print("    ▓▓                              ▓▓")
+        print(f"    ▓▓\tId: {player.id}")
+        print(f"    ▓▓\tName: {player.name}")
+        print(f"    ▓▓\tAge: {player.age}")
+        print(f"    ▓▓\tEmail: {player.email}")
+        print("    ▓▓                              ▓▓")
+        print("    ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
+        print("")
+        print("1. Edit info")
+        print("")
         print("Q. Exit")
         print("H. Homepage")
         return input("Choice:")
@@ -55,7 +63,7 @@ class PlayerView:
                 elif len(name_input) < 3:
                     error_name = int("name_too_short")
             except ValueError:
-                print('Name too long (max 20 caracter) or incorect caracter, please try again.')
+                print('Name too long (max 20 caracter) or to short (min 3 caracter), please try again.')
             else:
                 break
 
@@ -88,3 +96,10 @@ class PlayerView:
             "age": age_input,
             "email": email_input
         }
+
+    @classmethod
+    def edit_player(cls):
+        print("fonction en cours de creation !")
+        print("Q. Exit")
+        print("H. Homepage")
+        return input("Choice:")

@@ -12,6 +12,7 @@ class Application:
         "new_player": PlayerController.create,
         "view_player": PlayerController.view,
         "delete_player": PlayerController.delete,
+        "edit_player": PlayerController.edit,
     }
 
     def __init__(self) -> None:
