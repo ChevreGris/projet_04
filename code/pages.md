@@ -66,6 +66,7 @@ H. Homepage
 
 # Player List By Ranking 
 ```
+
 Players list:
 
   ------------------------------------------------------------------------------
@@ -99,6 +100,7 @@ Q. Exit
 
 ================================================================================
 # New Tournament 
+
 ```
 Enter tournament name:
 Enter tournament location:
@@ -119,6 +121,7 @@ Enter player 8 ID:
 
 
 # Tournament recap
+
 ```
 Players :
   -------------------------------------------------------------------------------
@@ -142,6 +145,7 @@ Q. Exit
 
 
 # Start Tournament 
+
 ```
 First round :
   -------------------------------------------------------------------------------
@@ -163,6 +167,7 @@ Q. Exit
 
 
 # Start first round 
+
 ```
 First round :
   -------------------------------------------------------------------------------
@@ -175,7 +180,7 @@ First round :
   [  (D)     6 PELLETIER Cecile        /         8 POULIN Victor                ]
   [                                                                             ]
   -------------------------------------------------------------------------------
-Enter winnier ID:
+Enter winner ID (enter NULL for draw):
 
 1. Game (A)     -->     1 CHEVALIER Julie (+1)
 2. Game (B)
@@ -191,6 +196,7 @@ Q. Exit
 
 
 # Tournaments Result 
+
 ```
 Tournament results :
   -------------------------------------------------------------------------------
@@ -217,6 +223,7 @@ Q. Exit
 
 ================================================================================
 # Tournaments in Progress 
+
 ```
 Tournaments in progress :
   -------------------------------------------------------------------------------
@@ -240,6 +247,7 @@ Q. Exit
 
 ================================================================================
 # Ended Tournaments 
+
 ```
 Ended tournament list :
   -------------------------------------------------------------------------------
@@ -260,15 +268,16 @@ Q. Exit
 
 
 # Tournaments Details
+
 ```
 Tournament detail:
 
-    Tournament name:
-    Tournament location:
-    Tournament date:
-    Number of turns:
-    Time mode:
-    Description of the tournament:
+    Tournament name: Night test 6
+    Tournament location: France
+    Tournament date: 31/10/2021
+    Number of turns: 4
+    Time mode: Bullet
+    Description of the tournament: Test
 
 Tournament players:
     -------------------------------------------------------------------------------

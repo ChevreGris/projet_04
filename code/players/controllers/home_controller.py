@@ -15,8 +15,4 @@ class HomePageController:
         else:
             next = "homepage"
             print("invalid value")
-            
-
         return next, None
-
-

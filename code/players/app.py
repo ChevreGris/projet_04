@@ -21,8 +21,8 @@ class Application:
         self.route_params = None
         self.store = {
             "players": [
-                Player(1, "Pablo", 36, "pablo@test.com"),
-                Player(2, "Michel", 40, "michel@test.com"),
+                Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994),
+                Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143),
             ]
         }
 
