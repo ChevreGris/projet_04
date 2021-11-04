@@ -7,3 +7,4 @@ class Player:
         self.sex = sex
         self.ranking = ranking
 
+    #def Validation(self)

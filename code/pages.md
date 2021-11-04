@@ -15,7 +15,7 @@ Q. Exit
 # Homepage players
 
 ```
-Players list:
+Players list :
 
   ------------------------------------------------------------------------------
   [  Id     Name                            Birth date        Sex     Ranking  ]
@@ -26,10 +26,9 @@ Players list:
 
 1. New Player
 2. Edit Player
-    [Enter Player Id, "C" to Cancel]
+    [Enter Player Id]
 3. Delete Player
     [Enter Player Id, "C" to Cancel]
-4. Player list by ranking
 
 H. Homepage
 Q. Exit
@@ -64,23 +63,6 @@ H. Homepage
 ```
 
 
-# Player List By Ranking 
-```
-
-Players list:
-
-  ------------------------------------------------------------------------------
-  [  Id     Name                            Birth date        Sex     Ranking  ]
-  ------------------------------------------------------------------------------
-  [  1      CHEVALIER Julie                 27/11/1983         F       1547    ]
-  [  2      DUPOND Jacques                  12/05/1998         M       1103    ]
-  ------------------------------------------------------------------------------
-
-H. Homepage
-Q. Exit
-```
-
-
 ================================================================================
 
 ================================================================================
@@ -108,6 +90,17 @@ Enter tournament date:
 Enter number of turns (default is 4):
 Enter time mode (Bullet, Blitz or Quick it):
 Enter description of the tournament:
+```
+
+
+```
+  ------------------------------------------------------------------------------
+  [  Id     Name                            Birth date        Sex     Ranking  ]
+  ------------------------------------------------------------------------------
+  [  1      DUPOND Jacques                  12/05/1998         M       1103    ]
+  [  2      CHEVALIER Julie                 27/11/1983         F       1547    ]
+  ------------------------------------------------------------------------------
+
 Enter player 1 ID:
 Enter player 2 ID:
 Enter player 3 ID:
@@ -260,7 +253,7 @@ Ended tournament list :
   -------------------------------------------------------------------------------
 
 1. View tournament details
-    [Enter tournament Id, "C" to Cancel]
+    [Enter tournament Id]
 
 H. Homepage
 Q. Exit

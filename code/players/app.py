@@ -8,9 +8,8 @@ class Application:
 
     routes = {
         "homepage": HomePageController.dispatch,
-        "list_player": PlayerController.list,
+        "home_player": PlayerController.home_list,
         "new_player": PlayerController.create,
-        "view_player": PlayerController.view,
         "delete_player": PlayerController.delete,
         "edit_player": PlayerController.edit,
     }
