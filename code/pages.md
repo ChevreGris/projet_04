@@ -84,11 +84,12 @@ Q. Exit
 # New Tournament 
 
 ```
+Enter tournament ID:
 Enter tournament name:
 Enter tournament location:
 Enter tournament date:
 Enter number of turns (default is 4):
-Enter time mode (Bullet, Blitz or Quick it):
+Enter time mode (Bullet, Blitz or Quick_it):
 Enter description of the tournament:
 ```
 

@@ -1,7 +1,10 @@
-from controllers.home_controller import HomePageController
-from models.player import Player
-from controllers.player_controller import PlayerController
+from tinydb import TinyDB
+db = TinyDB('db.json')
 import subprocess as sp
+from controllers.home_controller import HomePageController
+from controllers.player_controller import PlayerController
+from models.player import Player
+from controllers.tournament_controller import TournamentController
 
 
 class Application:
@@ -12,6 +15,10 @@ class Application:
         "new_player": PlayerController.create,
         "delete_player": PlayerController.delete,
         "edit_player": PlayerController.edit,
+        "home_tournament": TournamentController.home_tournament,
+        "new_tournament": TournamentController.create_tournament,
+        #"tournaments_in_progress": ,
+        #"ended_tournaments": ,
     }
 
     def __init__(self) -> None:
