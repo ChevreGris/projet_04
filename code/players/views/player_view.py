@@ -1,6 +1,5 @@
 import subprocess as sp
-from models.player import Player
-
+from input_validation import InputValidation
 
 class PlayerView:
     @classmethod
@@ -38,7 +37,6 @@ class PlayerView:
         extra_info = None
 
         while True:
-            
             try:
                 if choice == '2':
                     sp.call('clear', shell=True)
@@ -50,7 +48,6 @@ class PlayerView:
                         return 'home_player', None
                     else:
                         return choice, int(extra_info)
-
                 elif choice == '3':
                     sp.call('clear', shell=True)
                     PlayerView.player_list(players)
@@ -61,10 +58,8 @@ class PlayerView:
                         return 'home_player', None
                     else:
                         return choice, int(extra_info)
-                          
             except ValueError:
                 print("invalid value")
-                
             else:
                 break
 
@@ -72,7 +67,21 @@ class PlayerView:
 
     @classmethod
     def create_player(cls):
-        return Player.Validation()
+        id_input = InputValidation.id_validation()
+        lastname_input = InputValidation.lastname_validation()
+        firstname_input = InputValidation.firstname_validation()
+        birthdate_input = InputValidation.birthdate_validation()
+        sex_input = InputValidation.sex_validation()
+        ranking_input = InputValidation.ranking_validation()
+
+        return {
+            'id': id_input,
+            'lastname': lastname_input.upper(),
+            'firstname': firstname_input.capitalize(),
+            'birthdate': birthdate_input,
+            'sex': sex_input.upper(),
+            'ranking': ranking_input
+        }
 
     @classmethod
     def edit_player(cls, player):

@@ -1,9 +1,8 @@
-from tinydb import TinyDB
-db = TinyDB('db.json')
 import subprocess as sp
 from controllers.home_controller import HomePageController
 from controllers.player_controller import PlayerController
 from models.player import Player
+from models.tournament import Tournament
 from controllers.tournament_controller import TournamentController
 
 
@@ -17,6 +16,7 @@ class Application:
         "edit_player": PlayerController.edit,
         "home_tournament": TournamentController.home_tournament,
         "new_tournament": TournamentController.create_tournament,
+        "tournament_recap": TournamentController.recap_tournament,
         #"tournaments_in_progress": ,
         #"ended_tournaments": ,
     }
@@ -29,6 +29,16 @@ class Application:
             "players": [
                 Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994),
                 Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143),
+                Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 994),
+                Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143),
+                Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994),
+                Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143),
+                Player(7, "CURIE", "Marrie", "25/10/1881", "f", 994),
+                Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143),
+            ],
+            "tournaments": [
+                Tournament(1, "Test 1", "Paris", "25/10/2021", "a", "Test description", [1,2,3,4,5,6,7,8]),
+                Tournament(2, "Test 2", "Lyon", "275/10/2021", "a", "Test description 2", [5,6,7,8,1,2,3,4])
             ]
         }
 

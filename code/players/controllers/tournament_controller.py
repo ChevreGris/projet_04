@@ -1,6 +1,7 @@
 from models.tournament import Tournament
 from views.tournament_view import TournamentView
 
+
 class TournamentController:
 
     @classmethod
@@ -26,5 +27,12 @@ class TournamentController:
     def create_tournament(cls, store, route_params=None):
         data = TournamentView.new_tournament_page(store)
         tournament = Tournament(**data)
-        store["tournament"].append(tournament)
-        return "homepage", None
+        store["tournaments"].append(tournament)
+        return "tournament_recap", tournament.tournament_id
+    
+    @classmethod
+    def recap_tournament(cls, store, route_params):
+        tournament = next(t for t in store["tournaments"] if t.tournament_id == route_params)
+        TournamentView.tournament_recap(tournament, store["players"])
+        #return "homepage", None
+
