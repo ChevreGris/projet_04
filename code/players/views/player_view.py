@@ -9,6 +9,7 @@ class PlayerView:
         print('    [\tId\tName\t\t\t\tBirth date\tSex\tRanking  ]')
         print('    ---------------------------------------------------'
               '---------------------------')
+
         for player in players:
             print(f'    [\t{player.id}\t{player.lastname} {player.firstname}'
                   f'\t\t\t{player.birthdate}\t{player.sex}\t{player.ranking}'

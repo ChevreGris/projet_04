@@ -14,8 +14,8 @@ class TournamentView:
         print('---------------------------------------------------'
               '---------------------------\n')
         print('1. New Tournament')
-        print('2. Tournaments in progress               H. Homepage')
-        print('3. Ended Tournament                      Q. Exit\n')
+        print('2. Start or Continue a Tournament            H. Homepage')
+        print('3. See Ended Tournament                      Q. Exit\n')
 
         choice = input('Choice:')
         return choice
@@ -50,11 +50,55 @@ class TournamentView:
             'date': date_input,
             'time_mode': time_mode_input,
             'description': description_input,
-            'players': players_inputs
+            'player_ids': players_inputs
         }
 
     @classmethod
-    def tournament_recap(cls, tournament, players):
+    def tournament_list(cls, tournament):
+        print('    ---------------------------------------------------'
+              '---------------------------')
+        print('    [\tId\tName')
+        print('    ---------------------------------------------------'
+              '---------------------------')
+
+        for tournaments in tournament:
+            print(f'    [\t{tournaments.tournament_id}\t{tournaments.name} {tournaments.location}'
+                   f'\t\t\t{tournaments.date}\t{tournaments.time_mode}\t{tournaments.description}    ')
+        print('    ---------------------------------------------------'
+              '---------------------------\n')
+        print('1. Tournament details                        B. Back')
+        print('2. Start or Continue a Tournament            H. Homepage')
+        print('                                             Q. Exit\n')
+        choice = input('Choice:')
+        extra_info = None
+
+        while True:
+            try:
+                if choice == '1':
+                    extra_info = input(
+                        'Enter Tournament Id to see Details (C. Cancel) :'
+                    )
+                    if extra_info.lower() == 'c':
+                        return 'home_player', None
+                    else:
+                        return choice, int(extra_info)
+                elif choice == '2':
+                    extra_info = input(
+                        'Enter Tournament Id to Start or Continue the Tournament (C. Cancel) :'
+                    )
+                    if extra_info.lower() == 'c':
+                        return 'home_player', None
+                    else:
+                        return choice, int(extra_info)
+            except ValueError:
+                print("invalid value")
+            else:
+                break
+
+        return choice, extra_info
+
+    @classmethod
+    def tournament_recap(cls, tournament):
         print('    ---------------------------------------------------'
               '---------------------------')
         print('    [\tId')
@@ -62,10 +106,27 @@ class TournamentView:
               '---------------------------')
         print(f'    [\t{tournament.tournament_id}\t{tournament.name} {tournament.location}'
               f'\t\t\t{tournament.date}\t{tournament.time_mode}\t{tournament.description}    ')
-        for player_id in tournament.players:
-            player = next(p for p in players if p.id == player_id)
+        for player in tournament.players:
             print(f'    [\t{player.id} {player.lastname} {player.firstname}'
                   f' {player.birthdate} {player.sex} {player.ranking}')        
         print('    ---------------------------------------------------'
               '---------------------------\n')
+        print('B. Back')
+        print('H. Homepage')
+        print('Q. Exit\n')
 
+        choice = input('Choice:')
+        extra_info = None
+        
+        return choice, extra_info
+
+    @classmethod
+    def start_tournament_page(cls):
+        print('B. Back')
+        print('H. Homepage')
+        print('Q. Exit\n')
+
+        choice = input('Choice:')
+        extra_info = None
+        
+        return choice, extra_info

@@ -1,3 +1,5 @@
+from models.round import Round
+
 class Tournament:
 
     def __init__(self, tournament_id, name, location, date,
@@ -10,3 +12,7 @@ class Tournament:
         self.time_mode = time_mode
         self.description = description
         self.players = players
+
+    def start_round(self):
+        #round = Round("round 1")
+        pass
