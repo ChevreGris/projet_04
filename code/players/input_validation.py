@@ -2,7 +2,7 @@ from exceptions import InputException
 
 
 class InputValidation():
-
+    
     @classmethod
     def id_validation(self):
         #Error management and input validation for the ID input
@@ -149,9 +149,9 @@ class InputValidation():
                         'invalid lastname, must only contain letters.'
                     )
 
-                elif len(lastname_input) > 20:
+                elif len(lastname_input) > 15:
                     raise InputException(
-                        'Lastname too long (max 20 caracter).'
+                        'Lastname too long (max 15 caracter).'
                     )
                 elif len(lastname_input) < 3:
                     raise InputException(
@@ -174,9 +174,9 @@ class InputValidation():
                     raise InputException(
                         'invalid firstname, must only contain letters.'
                     )
-                elif len(firstname_input) > 20:
+                elif len(firstname_input) > 15:
                     raise InputException(
-                        'Firstname too long (max 20 caracter).'
+                        'Firstname too long (max 15 caracter).'
                     )
                 elif len(firstname_input) < 3:
                     raise InputException(
@@ -186,7 +186,7 @@ class InputValidation():
                 print(f'error : {str(e)}')
             else:
                 break
-
+        
         return firstname_input
 
     @classmethod
@@ -265,3 +265,59 @@ class InputValidation():
                 break
 
         return ranking_input
+
+    @classmethod
+    def lenght_to_max(self, lname, fname):
+        #set the space betwin name and date in player menu
+        if len(fname + lname) == 6:
+            max_lenght = '                        '
+        elif len(fname + lname) == 7:
+            max_lenght = '                       '
+        elif len(fname + lname) == 8:
+            max_lenght = '                      '
+        elif len(fname + lname) == 9:
+            max_lenght = '                     '
+        elif len(fname + lname) == 10:
+            max_lenght = '                    '
+        elif len(fname + lname) == 11:
+            max_lenght = '                   '
+        elif len(fname + lname) == 12:
+            max_lenght = '                  '
+        elif len(fname + lname) == 13:
+            max_lenght = '                 '
+        elif len(fname + lname) == 14:
+            max_lenght = '                '
+        elif len(fname + lname) == 15:
+            max_lenght = '               '
+        elif len(fname + lname) == 16:
+            max_lenght = '              '
+        elif len(fname + lname) == 17:
+            max_lenght = '             '
+        elif len(fname + lname) == 18:
+            max_lenght = '            '
+        elif len(fname + lname) == 19:
+            max_lenght = '           '
+        elif len(fname + lname) == 20:
+            max_lenght = '          '
+        elif len(fname + lname) == 21:
+            max_lenght = '         '
+        elif len(fname + lname) == 22:
+            max_lenght = '        '
+        elif len(fname + lname) == 23:
+            max_lenght = '       '
+        elif len(fname + lname) == 24:
+            max_lenght = '      '
+        elif len(fname + lname) == 25:
+            max_lenght = '     '
+        elif len(fname + lname) == 26:
+            max_lenght = '    '
+        elif len(fname + lname) == 27:
+            max_lenght = '   '
+        elif len(fname + lname) == 28:
+            max_lenght = '  '
+        elif len(fname + lname) == 29:
+            max_lenght = ' '
+        elif len(fname + lname) == 30:
+            max_lenght = ''
+        
+        return max_lenght

@@ -5,36 +5,37 @@ class PlayerView:
     @classmethod
     def player_list(cls, players):
         print('    ---------------------------------------------------'
-              '---------------------------')
-        print('    [\tId\tName\t\t\t\tBirth date\tSex\tRanking  ]')
+              '-----------------------------------')
+        print('    [\tId\tName\t\t\t\t\t  Birth date\tSex\tRanking  ]')
         print('    ---------------------------------------------------'
-              '---------------------------')
+              '-----------------------------------')
 
         for player in players:
-            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}'
-                  f'\t\t\t{player.birthdate}\t{player.sex}\t{player.ranking}'
+            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}{player.space}'
+                  f'           {player.birthdate}\t {player.sex}\t{player.ranking}'
                   f'\t ]')
         print('    ---------------------------------------------------'
-              '---------------------------\n')
+              '-----------------------------------\n')
 
     @classmethod
     def home_player_list(cls, players):
         print('    ---------------------------------------------------'
-              '---------------------------')
-        print('    [\tId\tName\t\t\t\tBirth date\tSex\tRanking  ]')
+              '-----------------------------------')
+        print('    [\tId\tName\t\t\t\t\t  Birth date\tSex\tRanking  ]')
         print('    ---------------------------------------------------'
-              '---------------------------')
+              '-----------------------------------')
         for player in players:
-            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}'
-                  f'\t\t\t{player.birthdate}\t{player.sex}\t{player.ranking}'
+            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}{player.space}'
+                  f'           {player.birthdate}\t {player.sex}\t{player.ranking}'
                   f'\t ]')
         print('    ---------------------------------------------------'
-              '---------------------------\n')
-        print('1. New player')
-        print('2. Edit Player               H. Homepage')
-        print('3. Delete Player             Q. Exit')
+              '-----------------------------------\n')
+        print('    1. New player')
+        print('    2. Edit Player               H. Homepage')
+        print('    3. Delete Player             Q. Exit')
+        print('')
 
-        choice = input('Choice:')
+        choice = input('    Choice: ')
         extra_info = None
 
         while True:
@@ -43,7 +44,7 @@ class PlayerView:
                     sp.call('clear', shell=True)
                     PlayerView.player_list(players)
                     extra_info = input(
-                        '\nTo edit Player info : \n\nEnter Player Id (C. Cancel) :'
+                        '\nTo edit Player info : \n\nEnter Player Id (C. Cancel): '
                     )
                     if extra_info.lower() == 'c':
                         return 'home_player', None
@@ -53,7 +54,7 @@ class PlayerView:
                     sp.call('clear', shell=True)
                     PlayerView.player_list(players)
                     extra_info = input(
-                        '\nTo delete Player:\n\nEnter Player Id (C. Cancel) :'
+                        '\nTo delete Player:\n\nEnter Player Id (C. Cancel): '
                     )
                     if extra_info.lower() == 'c':
                         return 'home_player', None
@@ -74,6 +75,7 @@ class PlayerView:
         birthdate_input = InputValidation.birthdate_validation()
         sex_input = InputValidation.sex_validation()
         ranking_input = InputValidation.ranking_validation()
+        space = InputValidation.lenght_to_max(lastname_input, firstname_input)
 
         return {
             'id': id_input,
@@ -81,7 +83,8 @@ class PlayerView:
             'firstname': firstname_input.capitalize(),
             'birthdate': birthdate_input,
             'sex': sex_input.upper(),
-            'ranking': ranking_input
+            'ranking': ranking_input,
+            'space' : space
         }
 
     @classmethod

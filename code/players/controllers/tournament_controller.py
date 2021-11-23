@@ -1,3 +1,5 @@
+from operator import attrgetter
+
 from models.tournament import Tournament
 from views.tournament_view import TournamentView
 
@@ -19,7 +21,7 @@ class TournamentController:
         elif choice == "h":
             next = "homepage"
         else:
-            print("invalid value home tournament")
+            print("invalid value")
             next = "home_tournament"
         return next, None
 
@@ -40,10 +42,10 @@ class TournamentController:
     def list_tournament(cls, store, route_params=None):
         choice, tournament_id = TournamentView.tournament_list(store["tournaments"])
 
-        if choice == "1":
-            return "tournament_recap", tournament_id
-        elif choice == "2":
-            return "start_tournament_page", tournament_id
+        if choice == "2":
+            return "tournament_detail", tournament_id
+        elif choice == "1":
+            return "tournament_start", tournament_id
         elif choice == "q":
             next = "quit"
         elif choice == "h":
@@ -51,37 +53,44 @@ class TournamentController:
         elif choice == "b":
             return "home_tournament", None
         else:
-            print("invalid value home tournament")
-            next = "home_tournament"
+            print("invalid value")
+            next = "tournaments_list"
         return next, None
 
     @classmethod
-    def recap_tournament(cls, store, route_params):
+    def details_tournament(cls, store, route_params):
         tournament = next(t for t in store["tournaments"] if str(t.tournament_id) == str(route_params))
-        choice = TournamentView.tournament_recap(tournament)
+        choice = TournamentView.tournament_details(tournament)
 
         if choice == "q":
             next_ = "quit"
         elif choice == "h":
             next_ = "homepage"
         elif choice == "b":
-            return "home_tournament", None
+            return "tournaments_list", None
         else:
-            print("invalid value home tournament")
-            next_ = "home_tournament"
+            print("invalid value")
+            next_ = "tournament_detail"
         return next_, None
 
     @classmethod
     def start_tournament(cls, store, route_params):
-        choice = TournamentView.start_tournament_page()
+        tournament = next(t for t in store["tournaments"] if str(t.tournament_id) == str(route_params))
+        players = tournament.players
+        players_by_ranking = sorted(players, key=attrgetter('ranking'), reverse=True)
 
-        if choice == "q":
-            next = "quit"
+        choice = TournamentView.start_tournament_page(tournament, players_by_ranking)
+
+        
+        if choice == 1:
+            pass
+        elif choice == "q":
+            next_ = "quit"
         elif choice == "h":
-            next = "homepage"
+            next_ = "homepage"
         elif choice == "b":
-            return "home_tournament", None
+            return "tournaments_list", None
         else:
-            print("invalid value home tournament")
-            next = "home_tournament"
-        return next, None
+            print("invalid value")
+            next_ = "tournament_start"
+        return next_, None

@@ -16,38 +16,42 @@ class Application:
         "edit_player": PlayerController.edit,
         "home_tournament": TournamentController.home_tournament,
         "new_tournament": TournamentController.create_tournament,
-        "tournament_recap": TournamentController.recap_tournament,
+        "tournament_detail": TournamentController.details_tournament,
         "tournaments_list": TournamentController.list_tournament,
-        "start_tournament_page": TournamentController.start_tournament,
+        "tournament_start": TournamentController.start_tournament,
     }
 
     def __init__(self) -> None:
         self.route = "homepage"
         self.exit = False
         self.route_params = None
-        player1 = Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994),
-        player2 = Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143),
-        player3 = Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 994),
-        player4 = Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143),
-        player5 = Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994),
-        player6 = Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143),
-        player7 = Player(7, "CURIE", "Marie", "25/10/1881", "f", 994),
-        player8 = Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143),
-        players = [player1, player2, player3, player4, player5, player6, player7, player8]
-        tournament = Tournament(1, "Test 1", "Paris", "25/10/2021", "a", "Test description", players)
+        players = [
+            Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994, "                  "),
+            Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143, "                  "),
+            Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143, "               "),
+            Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143, "            "),
+            Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994, "                 "),
+            Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143, "                     "),
+            Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 900, "                 "),
+            Player(7, "CURIE", "Marie", "25/10/1881", "f", 994, "                    "),
+            
+        ]
+        tournament = Tournament(1, "Test 1 tournois", "Marseille", "25/10/2021", "a", "Test description", players, "      ")
         self.store = {
             "players": [
-                Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994),
-                Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143),
-                Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 994),
-                Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143),
-                Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994),
-                Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143),
-                Player(7, "CURIE", "Marie", "25/10/1881", "f", 994),
-                Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143),
+                Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994, "                  "),
+                Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143, "                  "),
+                Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143, "               "),
+                Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143, "            "),
+                Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994, "                 "),
+                Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143, "                     "),
+                Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 900, "                 "),
+                Player(7, "CURIE", "Marie", "25/10/1881", "f", 994, "                    "),
             ],
             "tournaments": [
-                
+                tournament,
+                Tournament(2, "Test 2 tournois", "Paris", "25/10/2021", "B", "Test description", players, "          "),
+                Tournament(3, "Test 3 tournois", "Lille", "25/10/2021", "a", "Test description", players, "          "),
             ],
         }
 
