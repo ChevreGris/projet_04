@@ -1,5 +1,3 @@
-from operator import attrgetter
-
 from models.tournament import Tournament
 from views.tournament_view import TournamentView
 
@@ -76,14 +74,51 @@ class TournamentController:
     @classmethod
     def start_tournament(cls, store, route_params):
         tournament = next(t for t in store["tournaments"] if str(t.tournament_id) == str(route_params))
-        players = tournament.players
-        players_by_ranking = sorted(players, key=attrgetter('ranking'), reverse=True)
+        tournament.start_round()
+        choice, extra_info = TournamentView.start_tournament_page(tournament)
+        next_ = "tournament_start"
 
-        choice = TournamentView.start_tournament_page(tournament, players_by_ranking)
-
-        
         if choice == 1:
-            pass
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[0])
+        elif choice == 2:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[1])
+        elif choice == 3:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[2])
+        elif choice == 4:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[3])
+        
+        choice, extra_info = TournamentView.start_tournament_page(tournament)
+
+        if choice == 1:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[0])
+        elif choice == 2:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[1])
+        elif choice == 3:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[2])
+        elif choice == 4:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[3])
+        choice, extra_info = TournamentView.start_tournament_page(tournament)
+
+        if choice == 1:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[0])
+        elif choice == 2:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[1])
+        elif choice == 3:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[2])
+        elif choice == 4:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[3])
+
+        choice, extra_info = TournamentView.start_tournament_page(tournament)
+
+        if choice == 1:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[0])
+        elif choice == 2:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[1])
+        elif choice == 3:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[2])
+        elif choice == 4:
+            tournament.set_winner(extra_info, tournament.rounds[-1].games[3])
+
         elif choice == "q":
             next_ = "quit"
         elif choice == "h":
@@ -93,4 +128,10 @@ class TournamentController:
         else:
             print("invalid value")
             next_ = "tournament_start"
+        
+        tournament.start_other_round()
+        choice, extra_info = TournamentView.start_tournament_page(tournament)
+        i = input('i')
         return next_, None
+
+        

@@ -119,7 +119,7 @@ class TournamentView:
         return choice, extra_info
 
     @classmethod
-    def start_tournament_page(cls, tournament, players_by_ranking):
+    def start_tournament_page(cls, tournament):
         print('----------------------------------------------------------------------------------------------')
         print("[                                   TOURNAMENT DESCRIPTION                                   ]")
         print('----------------------------------------------------------------------------------------------\n')
@@ -132,75 +132,70 @@ class TournamentView:
         print('    Players :')
         PlayerView.player_list(tournament.players)
         print('')
-
-        print('----------------------------------------------------------------------------------------------')
-        print("[                                        FIRST ROUND                                         ]")
-        print('----------------------------------------------------------------------------------------------')
-        print('[  Game:  Player Id and Name:                  VS           Player Id and Name:              ]')
-        print('[                                                                                            ]')
-        print(f'[   (A)   {players_by_ranking[0].id} {players_by_ranking[0].lastname} {players_by_ranking[0].firstname}{players_by_ranking[0].space}    /            {players_by_ranking[0].id} {players_by_ranking[1].lastname} {players_by_ranking[1].firstname}{players_by_ranking[1].space}]')
-        print(f'[   (B)   {players_by_ranking[2].id} {players_by_ranking[2].lastname} {players_by_ranking[2].firstname}{players_by_ranking[2].space}    /            {players_by_ranking[3].id} {players_by_ranking[3].lastname} {players_by_ranking[3].firstname}{players_by_ranking[3].space}]')
-        print(f'[   (C)   {players_by_ranking[4].id} {players_by_ranking[4].lastname} {players_by_ranking[4].firstname}{players_by_ranking[4].space}    /            {players_by_ranking[5].id} {players_by_ranking[5].lastname} {players_by_ranking[5].firstname}{players_by_ranking[5].space}]')
-        print(f'[   (D)   {players_by_ranking[6].id} {players_by_ranking[6].lastname} {players_by_ranking[6].firstname}{players_by_ranking[6].space}    /            {players_by_ranking[7].id} {players_by_ranking[7].lastname} {players_by_ranking[7].firstname}{players_by_ranking[7].space}]')
-        print('[                                                                                            ]')
-        print('----------------------------------------------------------------------------------------------\n')
-        print('\n')
+        for round in tournament.rounds:
+            print('----------------------------------------------------------------------------------------------')
+            print(f"[                                      {round.name}                                         ]")
+            print('----------------------------------------------------------------------------------------------')
+            print('[  Game:  Player Id and Name:                  VS           Player Id and Name:              ]')
+            print('[                                                                                            ]')
+            for game in round.games:
+                print(f'(A)   {game.player1.id} {game.player1.fullname}{game.player1.space}vs             {game.player2.id} {game.player2.fullname}')
+            print('----------------------------------------------------------------------------------------------\n')
+            print('\n')
         print('1. Game (A)')
+        if tournament.rounds[-1].games[0].winner is not None:
+            if not tournament.rounds[-1].games[0].winner:
+                print('Draw')
+            else :
+                print(f'    Winner : {tournament.rounds[-1].games[0].winner.fullname}')
+
         print('2. Game (B)')
+        if tournament.rounds[-1].games[1].winner is not None:
+            if not tournament.rounds[-1].games[1].winner:
+                print('Draw')
+            else :
+                print(f'    Winner : {tournament.rounds[-1].games[1].winner.fullname}')
+
         print('3. Game (C)')
-        print('4. Game (D)\n')
+        if tournament.rounds[-1].games[2].winner is not None:
+            if not tournament.rounds[-1].games[2].winner:
+                print('Draw')
+            else :
+                print(f'    Winner : {tournament.rounds[-1].games[2].winner.fullname}')
+
+        print('4. Game (D)')
+        if tournament.rounds[-1].games[3].winner is not None:
+            if not tournament.rounds[-1].games[3].winner:
+                print('Draw')
+            else :
+                print(f'    Winner : {tournament.rounds[-1].games[3].winner.fullname}\n')
+
         print('B. Back')
         print('H. Homepage')
         print('Q. Exit\n')
         
+        
         choice = input('Choice: ')
+        if choice in "1234":
+            choice = int(choice)
         extra_info = None
 
         while True:
             try:
-                if choice == '1':
-                    extra_info = input(
-                        'Enter winner ID (enter "NULL" for draw, "C" to cancel): '
-                    )
-                    if extra_info.lower() == 'null':
-                        return choice, extra_info
-                    elif extra_info.lower() == 'c':
-                        return 'tournament_start', None
-                    else:
-                        return choice, int(extra_info)
-                elif choice == '2':
-                    extra_info = input(
-                        'Enter winner ID (enter "NULL" for draw, "C" to cancel): '
-                    )
-                    if extra_info.lower() == 'null':
-                        return choice, extra_info
-                    elif extra_info.lower() == 'c':
-                        return 'tournament_start', None
-                    else:
-                        return choice, int(extra_info)
-                elif choice == '3':
-                    extra_info = input(
-                        'Enter winner ID (enter "NULL" for draw, "C" to cancel): '
-                    )
-                    if extra_info.lower() == 'null':
-                        return choice, extra_info
-                    elif extra_info.lower() == 'c':
-                        return 'tournament_start', None
-                    else:
-                        return choice, int(extra_info)
-                elif choice == '4':
-                    extra_info = input(
-                        'Enter winner ID (enter "NULL" for draw, "C" to cancel): '
-                    )
-                    if extra_info.lower() == 'null':
-                        return choice, extra_info
-                    elif extra_info.lower() == 'c':
-                        return 'tournament_start', None
-                    else:
-                        return choice, int(extra_info)
+                extra_info = input(
+                    f'1. {round.games[choice -1].player1.fullname}\n'
+                    f'2. {round.games[choice -1].player2.fullname}\n'
+                    '3. draw\n'
+                    'Enter winner  ("C" to cancel): '
+                    )   
+                if extra_info.lower() == 'c':
+                    return 'tournament_start', None
+                else:
+                    return choice, int(extra_info)
             except ValueError:
                 print("invalid value")
             else:
                 break
+            return choice, extra_info
 
-        return choice, extra_info
+    

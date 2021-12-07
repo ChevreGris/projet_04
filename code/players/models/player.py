@@ -7,3 +7,7 @@ class Player:
         self.sex = sex
         self.ranking = ranking
         self.space = space
+
+    @property
+    def fullname(self):
+        return f'{self.firstname} {self.lastname.upper()}'
