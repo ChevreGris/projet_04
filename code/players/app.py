@@ -26,27 +26,27 @@ class Application:
         self.exit = False
         self.route_params = None
         players = [
-            Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994, "                  "),
-            Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143, "                  "),
-            Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143, "               "),
-            Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143, "            "),
-            Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994, "                 "),
-            Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143, "                     "),
-            Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 900, "                 "),
-            Player(7, "CURIE", "Marie", "25/10/1881", "f", 994, "                    "),
+            Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994),
+            Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143),
+            Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143),
+            Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143),
+            Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994),
+            Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143),
+            Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 900),
+            Player(7, "CURIE", "Marie", "25/10/1881", "f", 994),
             
         ]
         tournament = Tournament(1, "Test 1 tournois", "Marseille", "25/10/2021", "a", "Test description", players, "      ")
         self.store = {
             "players": [
-                Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994, "                  "),
-                Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143, "                  "),
-                Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143, "               "),
-                Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143, "            "),
-                Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994, "                 "),
-                Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143, "                     "),
-                Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 900, "                 "),
-                Player(7, "CURIE", "Marie", "25/10/1881", "f", 994, "                    "),
+                Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994),
+                Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143),
+                Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143),
+                Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143),
+                Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994),
+                Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143),
+                Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 900),
+                Player(7, "CURIE", "Marie", "25/10/1881", "f", 994),
             ],
             "tournaments": [
                 tournament,

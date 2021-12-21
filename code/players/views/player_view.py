@@ -1,6 +1,11 @@
 import subprocess as sp
 from input_validation import InputValidation
 
+def space(player):
+    #set the space betwin name and date in player menu
+    max_lenght = 30 - len(player.lastname + player.firstname)
+    return " " * max_lenght
+
 class PlayerView:
     @classmethod
     def player_list(cls, players):
@@ -11,7 +16,7 @@ class PlayerView:
               '-----------------------------------')
 
         for player in players:
-            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}{player.space}'
+            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}{space(player)}'
                   f'           {player.birthdate}\t {player.sex}\t{player.ranking}'
                   f'\t ]')
         print('    ---------------------------------------------------'
@@ -25,7 +30,7 @@ class PlayerView:
         print('    ---------------------------------------------------'
               '-----------------------------------')
         for player in players:
-            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}{player.space}'
+            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}{space(player)}'
                   f'           {player.birthdate}\t {player.sex}\t{player.ranking}'
                   f'\t ]')
         print('    ---------------------------------------------------'

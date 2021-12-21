@@ -1,4 +1,3 @@
-
 from models.round import Round
 from models.game import Game
 
@@ -15,41 +14,26 @@ class Tournament:
         self.time_mode = time_mode
         self.description = description
         self.players = players
-        self.spaces = spaces
         self.scores = {}
 
     def set_winner(self, winner, game):
         if winner == 1:
-            id = game.player1.id
-            ranking = game.player1.ranking
-            curent_points = self.scores[id][1]
-            self.scores.update({id: [ranking, curent_points + 1]})
             game.winner = game.player1
-            print(self.scores)
+            self.scores[game.player1.id] = self.scores.get(game.player1.id, 0) + 1
         elif winner == 2:
-            id = game.player2.id
-            ranking = game.player2.ranking
-            curent_points = self.scores[id][1]
-            self.scores.update({id: [ranking, curent_points + 1]})
             game.winner = game.player2
-            print(self.scores)
+            self.scores[game.player2.id] = self.scores.get(game.player2.id, 0) + 1
         if winner == 3:
-            id = game.player1.id
-            ranking = game.player1.ranking
-            curent_points = self.scores[id][1]
-            self.scores.update({id: [ranking, curent_points + 0.5]})
-            id2 = game.player2.id
-            ranking2 = game.player2.ranking
-            curent_points2 = self.scores[id2][1]
-            self.scores.update({id2: [ranking2, curent_points2 + 0.5]})
             game.winner = False
-            print(self.scores)
+            self.scores[game.player1.id] = self.scores.get(game.player1.id, 0) + 0.5
+            self.scores[game.player2.id] = self.scores.get(game.player2.id, 0) + 0.5
 
 
     def start_round(self):
-        round = Round("round 1")
         for player in self.players:
-            self.scores[player.id] = [player.ranking, 0]
+            self.scores[player.id] = 0
+
+        round = Round("round 1")
         players_by_ranking = sorted(self.players, key=lambda player: (player.ranking), reverse=True)
         groupe1 = players_by_ranking[:4]
         groupe2 = players_by_ranking[4:]
@@ -66,23 +50,35 @@ class Tournament:
 
     def has_played(self, player1, player2):
         for round in self.rounds:
-            for game in round.matches:
+            for game in round.games:
                 if player1 in (game.player1, game.player2) and player2 in (game.player1, game.player2):
                     return True
 
     def start_other_round(self):
         round = Round(f"Round {len(self.rounds) + 1}")
-        score_by_order = sorted(self.scores.items(), key=lambda kv: (kv[1][1], kv[1]), reverse=True)
-        order_by_id = []
-        for id in score_by_order:
-            order_by_id.append(id[0])
-        players_by_order = sorted(self.players, key=lambda x: order_by_id.index(x[0]))
-        #players_by_order.sort(key=lambda x: order_by_id.index(x[0]))
+        for player in self.players:
+            player.score = self.scores.get(player.id, 0)
 
-        print(score_by_order)
-        print(order_by_id)
-        print(players_by_order)
+
+        print(self.scores)
         i = input('i')
+
+        self.players = sorted(self.players, key=lambda x:(x.score , x.ranking), reverse=True)
+
+
+        print(self.players)
+        i = input('i')
+
+
+        available_players = self.players.copy()
+        while available_players:
+            curent_player = available_players.pop(0)
+            for i, player in enumerate(available_players):
+                if not self.has_played(curent_player, player):
+                    round.games.append(Game(curent_player, player))
+                    del available_players[i]
+                    break
+
         self.rounds.append(round)
         pass
 
