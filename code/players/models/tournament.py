@@ -5,7 +5,7 @@ from models.game import Game
 class Tournament:
 
     def __init__(self, tournament_id, name, location, date,
-                 time_mode, description, players, spaces) -> None:
+                 time_mode, description, players) -> None:
         self.tournament_id = tournament_id
         self.name = name
         self.location = location
@@ -23,7 +23,7 @@ class Tournament:
         elif winner == 2:
             game.winner = game.player2
             self.scores[game.player2.id] = self.scores.get(game.player2.id, 0) + 1
-        if winner == 3:
+        elif winner == 3:
             game.winner = False
             self.scores[game.player1.id] = self.scores.get(game.player1.id, 0) + 0.5
             self.scores[game.player2.id] = self.scores.get(game.player2.id, 0) + 0.5
@@ -56,19 +56,10 @@ class Tournament:
 
     def start_other_round(self):
         round = Round(f"Round {len(self.rounds) + 1}")
+
         for player in self.players:
             player.score = self.scores.get(player.id, 0)
-
-
-        print(self.scores)
-        i = input('i')
-
         self.players = sorted(self.players, key=lambda x:(x.score , x.ranking), reverse=True)
-
-
-        print(self.players)
-        i = input('i')
-
 
         available_players = self.players.copy()
         while available_players:
@@ -78,7 +69,10 @@ class Tournament:
                     round.games.append(Game(curent_player, player))
                     del available_players[i]
                     break
-
+        
         self.rounds.append(round)
         pass
+
+    def finished_tournament(self):
+        return len(self.rounds) == 4 and self.rounds[3].finished()
 

@@ -76,10 +76,11 @@ class TournamentController:
         tournament = next(t for t in store["tournaments"] if str(t.tournament_id) == str(route_params))
         if not tournament.rounds:
             tournament.start_round()
-        if tournament.rounds[-1].finished():
+        if tournament.rounds[-1].finished() and not tournament.finished_tournament():
             tournament.start_other_round()
 
         choice, extra_info = TournamentView.start_tournament_page(tournament)
+        
         if len(tournament.rounds) < 5:
             if choice == 1:
                 tournament.set_winner(extra_info, tournament.rounds[-1].games[0])
@@ -89,20 +90,34 @@ class TournamentController:
                 tournament.set_winner(extra_info, tournament.rounds[-1].games[2])
             elif choice == 4:
                 tournament.set_winner(extra_info, tournament.rounds[-1].games[3])
+            elif choice == "q":
+                return "quit", None
+            elif choice == "h":
+                return "homepage", None
+            elif choice == "b":
+                return "tournaments_list", None
+            elif choice == "alpha":
+                tournament.players = sorted(tournament.players, key=lambda x:(x.lastname))
+                return "tournament_start", tournament.tournament_id
+            elif choice == "rank":
+                tournament.players = sorted(tournament.players, key=lambda x:(x.ranking), reverse=True)
+                return "tournament_start", tournament.tournament_id
             return "tournament_start", tournament.tournament_id
 
         if choice == "q":
-            next_ = "quit"
+            return "quit", None
         elif choice == "h":
-            next_ = "homepage"
+            return "homepage", None
         elif choice == "b":
             return "tournaments_list", None
+        
         else:
             print("invalid value")
             next_ = "tournament_start"
     
         choice, extra_info = TournamentView.start_tournament_page(tournament)
-        i = input('i')
         return next_, None
 
-        
+    @classmethod
+    def tournament_ended(cls, store, route_params):
+        pass

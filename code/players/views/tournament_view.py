@@ -2,6 +2,14 @@ from input_validation import InputValidation
 from views.player_view import PlayerView
 import subprocess as sp
 
+def space(player):
+    #set the space betwin name and date in player menu
+    max_lenght = 30 - len(player.lastname + player.firstname)
+    return " " * max_lenght
+
+def space_town(tournaments):
+    max_lenght = 20 - len(tournaments.location)
+    return " " * max_lenght
 
 class TournamentView:
 
@@ -31,6 +39,7 @@ class TournamentView:
 
         choice = input('Choice: ')
         return choice
+
 
     @classmethod
     def new_tournament_page(cls, store):
@@ -73,10 +82,10 @@ class TournamentView:
         print("[                                      TOURNAMENT LIST                                       ]")
         print('----------------------------------------------------------------------------------------------')
         print("[                                                                                            ]")
-        print('[             ID      Name, Location                       Date         Time mode            ]')
+        print('[             ID      Name, Location                         Date            Time mode       ]')
         print("[                                                                                            ]")
         for tournaments in tournament:
-            print(f'[             {tournaments.tournament_id}       {tournaments.name}, {tournaments.location}  {tournaments.date}          {tournaments.time_mode}                ]')
+            print(f'[             {tournaments.tournament_id}       {tournaments.name}, {tournaments.location}{space_town(tournaments)}  {tournaments.date}          {tournaments.time_mode}           ]')
         print("[                                                                                            ]")
         print('----------------------------------------------------------------------------------------------\n')
         print('    1. Start or Continue a Tournament            B. Back')
@@ -148,50 +157,72 @@ class TournamentView:
         print('')
         for round in tournament.rounds:
             print('----------------------------------------------------------------------------------------------')
-            print(f"[                                      {round.name}                                         ]")
+            print(f"[                                        {round.name.upper()}                                             ]")
             print('----------------------------------------------------------------------------------------------')
-            print('[  Game:  Player Id and Name:                  VS           Player Id and Name:              ]')
+            print('[  Game:  Player Id and Name:              VS              Player Id and Name:               ]')
             print('[                                                                                            ]')
+            game_num = 0
             for game in round.games:
-                print(f'(A)   {game.player1.id} {game.player1.fullname}vs             {game.player2.id} {game.player2.fullname}')
+                game_num += 1
+                print(f'[   ({game_num})   {game.player1.id} {game.player1.fullname}{space(game.player1)}vs              {game.player2.id} {game.player2.fullname}{space(game.player2)} ]')
             print('----------------------------------------------------------------------------------------------\n')
             print('\n')
-        print('1. Game (A)')
-        if tournament.rounds[-1].games[0].winner is not None:
-            if not tournament.rounds[-1].games[0].winner:
-                print('Draw')
-            else :
-                print(f'    Winner : {tournament.rounds[-1].games[0].winner.fullname}')
+        if tournament.finished_tournament():
+            print('\n----------------------------------------------------------------------------------------------')
+            print("[                                   TOURNAMENT RESULTS                                       ]")
+            print('----------------------------------------------------------------------------------------------\n')
+            for player in tournament.players:
+                print(f'                {player.fullname} :{space(player)}{player.score}')
+        else : 
+            print('1. Game (1)')
+            if tournament.rounds[-1].games[0].winner is not None:
+                if not tournament.rounds[-1].games[0].winner:
+                    print('Draw')
+                else :
+                    print(f'    Winner : {tournament.rounds[-1].games[0].winner.fullname}')
 
-        print('2. Game (B)')
-        if tournament.rounds[-1].games[1].winner is not None:
-            if not tournament.rounds[-1].games[1].winner:
-                print('Draw')
-            else :
-                print(f'    Winner : {tournament.rounds[-1].games[1].winner.fullname}')
+            print('2. Game (2)')
+            if tournament.rounds[-1].games[1].winner is not None:
+                if not tournament.rounds[-1].games[1].winner:
+                    print('Draw')
+                else :
+                    print(f'    Winner : {tournament.rounds[-1].games[1].winner.fullname}')
 
-        print('3. Game (C)')
-        if tournament.rounds[-1].games[2].winner is not None:
-            if not tournament.rounds[-1].games[2].winner:
-                print('Draw')
-            else :
-                print(f'    Winner : {tournament.rounds[-1].games[2].winner.fullname}')
+            print('3. Game (3)')
+            if tournament.rounds[-1].games[2].winner is not None:
+                if not tournament.rounds[-1].games[2].winner:
+                    print('Draw')
+                else :
+                    print(f'    Winner : {tournament.rounds[-1].games[2].winner.fullname}')
 
-        print('4. Game (D)')
-        if tournament.rounds[-1].games[3].winner is not None:
-            if not tournament.rounds[-1].games[3].winner:
-                print('Draw')
-            else :
-                print(f'    Winner : {tournament.rounds[-1].games[3].winner.fullname}\n')
+            print('4. Game (4)')
+            if tournament.rounds[-1].games[3].winner is not None:
+                if not tournament.rounds[-1].games[3].winner:
+                    print('Draw')
+                else :
+                    print(f'    Winner : {tournament.rounds[-1].games[3].winner.fullname}\n')
 
-        print('B. Back')
+        print('\nB. Back')
         print('H. Homepage')
         print('Q. Exit\n')
+        print('ALPHA. player by alpha')
+        print('RANK. player by rank\n')
         
         
         choice = input('Choice: ')
         if choice in "1234":
             choice = int(choice)
+        else :
+            if choice.lower() == 'b':
+                return 'b', None
+            elif choice.lower() == 'h':
+                return 'h', None
+            elif choice.lower() == 'q':
+                return 'q', None
+            elif choice.lower() == 'alpha':
+                return 'alpha', None
+            elif choice.lower() == 'rank':
+                return 'rank', None
         extra_info = None
 
         while True:
@@ -201,7 +232,7 @@ class TournamentView:
                     f'2. {round.games[choice -1].player2.fullname}\n'
                     '3. draw\n'
                     'Enter winner  ("C" to cancel): '
-                    )   
+                    )
                 if extra_info.lower() == 'c':
                     return 'tournament_start', None
                 else:
@@ -211,5 +242,22 @@ class TournamentView:
             else:
                 break
             return choice, extra_info
+
+    @classmethod
+    def result(cls, tournament):
+        print('\n----------------------------------------------------------------------------------------------')
+        print("[                                   TOURNAMENT RESULTS                                       ]")
+        print('----------------------------------------------------------------------------------------------\n')
+        for player in tournament.players:
+            print(f'                {player.fullname} :{space(player)}{player.score}')
+        print('\nB. Back')
+        print('H. Homepage')
+        print('Q. Exit\n')
+
+        choice = input('Choice: ')
+        extra_info = None
+        
+        return choice, extra_info
+
 
     

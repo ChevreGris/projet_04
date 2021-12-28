@@ -80,7 +80,6 @@ class PlayerView:
         birthdate_input = InputValidation.birthdate_validation()
         sex_input = InputValidation.sex_validation()
         ranking_input = InputValidation.ranking_validation()
-        space = InputValidation.lenght_to_max(lastname_input, firstname_input)
 
         return {
             'id': id_input,
@@ -88,8 +87,7 @@ class PlayerView:
             'firstname': firstname_input.capitalize(),
             'birthdate': birthdate_input,
             'sex': sex_input.upper(),
-            'ranking': ranking_input,
-            'space' : space
+            'ranking': ranking_input
         }
 
     @classmethod

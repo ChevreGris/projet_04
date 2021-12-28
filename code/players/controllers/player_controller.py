@@ -1,7 +1,10 @@
+from tinydb import TinyDB
 from models.player import Player
 from views.player_view import PlayerView
 from input_validation import InputValidation
 
+db = TinyDB('db.json')
+players_table = db.table('players')
 
 class PlayerController:
 
@@ -27,6 +30,7 @@ class PlayerController:
     def create(cls, store, route_params=None):
         data = PlayerView.create_player()
         player = Player(**data)
+        players_table.insert(player.to_dict())
         store["players"].append(player)
         return "home_player", None
 

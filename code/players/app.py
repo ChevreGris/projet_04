@@ -1,3 +1,4 @@
+from tinydb import TinyDB
 import subprocess as sp
 from controllers.home_controller import HomePageController
 from controllers.player_controller import PlayerController
@@ -19,6 +20,7 @@ class Application:
         "tournament_detail": TournamentController.details_tournament,
         "tournaments_list": TournamentController.list_tournament,
         "tournament_start": TournamentController.start_tournament,
+        "ended_tournament": TournamentController.tournament_ended,
     }
 
     def __init__(self) -> None:
@@ -36,7 +38,13 @@ class Application:
             Player(7, "CURIE", "Marie", "25/10/1881", "f", 994),
             
         ]
-        tournament = Tournament(1, "Test 1 tournois", "Marseille", "25/10/2021", "a", "Test description", players, "      ")
+        tournament = Tournament(1, "Test 1 tournois", "Marseille", "25/10/2021", "a", "Test description", players)
+        db = TinyDB('db.json')
+        players_table = db.table('players')
+        for player in players_table.all():
+            instance = Player.from_dict(player)
+
+        print(players_table.all())
         self.store = {
             "players": [
                 Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994),
@@ -47,11 +55,12 @@ class Application:
                 Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143),
                 Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 900),
                 Player(7, "CURIE", "Marie", "25/10/1881", "f", 994),
+                instance
             ],
             "tournaments": [
                 tournament,
-                Tournament(2, "Test 2 tournois", "Paris", "25/10/2021", "B", "Test description", players, "          "),
-                Tournament(3, "Test 3 tournois", "Lille", "25/10/2021", "a", "Test description", players, "          "),
+                Tournament(2, "Test 2 tournois", "Paris", "25/10/2021", "B", "Test description", players),
+                Tournament(3, "Test 3 tournois", "Lille", "25/10/2021", "a", "Test description", players),
             ],
         }
 
