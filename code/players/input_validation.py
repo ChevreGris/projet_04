@@ -65,6 +65,8 @@ class InputValidation():
             else:
                 break
 
+        return location_input
+
     @classmethod
     def date_validation(self):
         #Error management and input validation for the Date input

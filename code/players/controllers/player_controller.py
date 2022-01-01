@@ -1,10 +1,13 @@
-from tinydb import TinyDB
+from tinydb import TinyDB, Query
+from tinydb.queries import Query
+from tinydb.utils import T
 from models.player import Player
 from views.player_view import PlayerView
 from input_validation import InputValidation
 
 db = TinyDB('db.json')
 players_table = db.table('players')
+User = Query()
 
 class PlayerController:
 
@@ -22,6 +25,15 @@ class PlayerController:
             return "quit", None
         elif choice.lower() == "h":
             return "homepage", None
+        elif choice.lower() == "a":
+            store["players"] = sorted(store["players"], key=lambda x:(x.lastname))
+            return "home_player", None
+        elif choice.lower() == "r":
+            store["players"] = sorted(store["players"], key=lambda x:(int(x.ranking)), reverse=True)
+            return "home_player", None
+        elif choice.lower() == "i":
+            store["players"] = sorted(store["players"], key=lambda x:(x.id))
+            return "home_player", None
         else:
             print("invalid value ")
             return "home_player", None
@@ -34,36 +46,55 @@ class PlayerController:
         store["players"].append(player)
         return "home_player", None
 
+    def refresh_instance(store):
+        store["players"] = []
+        instance = []
+        for player in players_table.all():
+            instance.append(Player.from_dict(player))
+        store["players"] = instance
+
     @classmethod
     def delete(cls, store, route_params):
-        store["players"] = [
-            p for p in store["players"] if p.id != route_params
-        ]
+        players_table.remove(User.id == str(route_params))
+        PlayerController.refresh_instance(store)
+
         return "home_player", None
 
     @classmethod
     def edit(cls, store, route_params):
-        player = next(p for p in store["players"] if p.id == route_params)
+        for p in store["players"]:
+            if str(p.id) == str(route_params):
+                player = p
+            else:
+                pass
+
         choice = PlayerView.edit_player(player)
         
         if choice.lower() == "1":
-            id_input = InputValidation.id_validation()
-            return{'id': id_input}
-        elif choice.lower() == "2":
             lastname_input = InputValidation.lastname_validation()
-            return{'lastname': lastname_input.upper()}
-        elif choice.lower() == "3":
+            players_table.update({"lastname" : lastname_input}, User.id == str(route_params))
+            PlayerController.refresh_instance(store)
+            return "edit_player", route_params
+        elif choice.lower() == "2":
             firstname_input = InputValidation.firstname_validation()
-            return{'firstname': firstname_input.capitalize()}
-        elif choice.lower() == "4":
+            players_table.update({"firstname" : firstname_input}, User.id == str(route_params))
+            PlayerController.refresh_instance(store)
+            return "edit_player", route_params
+        elif choice.lower() == "3":
             birthdate_input = InputValidation.birthdate_validation()
-            return{'birthdate': birthdate_input}
-        elif choice.lower() == "5":
+            players_table.update({"birthdate" : birthdate_input}, User.id == str(route_params))
+            PlayerController.refresh_instance(store)
+            return "edit_player", route_params
+        elif choice.lower() == "4":
             sex_input = InputValidation.sex_validation()
-            return{'sex': sex_input.upper()}
-        elif choice.lower() == "6":
+            players_table.update({"sex" : sex_input}, User.id == str(route_params))
+            PlayerController.refresh_instance(store)
+            return "edit_player", route_params
+        elif choice.lower() == "5":
             ranking_input = InputValidation.ranking_validation()
-            return{'ranking': ranking_input}
+            players_table.update({"ranking" : ranking_input}, User.id == str(route_params))
+            PlayerController.refresh_instance(store)
+            return "edit_player", route_params
 
         elif choice.lower() == "b":
             return "home_player", None
@@ -73,4 +104,4 @@ class PlayerController:
             return "quit", None
         else:
             print("invalid value")
-            return "edit_player", None
+            return "edit_player", route_params

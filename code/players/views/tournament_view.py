@@ -1,5 +1,6 @@
 from input_validation import InputValidation
 from views.player_view import PlayerView
+from models.player import Player
 import subprocess as sp
 
 def space(player):
@@ -9,6 +10,14 @@ def space(player):
 
 def space_town(tournaments):
     max_lenght = 20 - len(tournaments.location)
+    return " " * max_lenght
+
+def space_name(tournaments):
+    max_lenght = 20 - len(tournaments.name)
+    return " " * max_lenght
+
+def space_id(tournaments):
+    max_lenght = 4 - len(str(tournaments.tournament_id))
     return " " * max_lenght
 
 class TournamentView:
@@ -40,6 +49,13 @@ class TournamentView:
         choice = input('Choice: ')
         return choice
 
+    def print_name(store, player1):
+        for p in store["players"]:
+            if str(p.id) == str(player1):
+                player = p
+            else:
+                pass
+        print('   > ' + player.fullname)
 
     @classmethod
     def new_tournament_page(cls, store):
@@ -49,19 +65,26 @@ class TournamentView:
         date_input = InputValidation.date_validation()
         time_mode_input = InputValidation.time_mode_validation()
         description_input = InputValidation.description_validation()
-        spaces = InputValidation.lenght_to_max(name_input, location_input)
         
         sp.call('clear', shell=True)
         PlayerView.player_list(store["players"])
 
         player1 = InputValidation.id_validation()
+        TournamentView.print_name(store, player1)
         player2 = InputValidation.id_validation()
+        TournamentView.print_name(store, player2)
         player3 = InputValidation.id_validation()
+        TournamentView.print_name(store, player3)
         player4 = InputValidation.id_validation()
+        TournamentView.print_name(store, player4)
         player5 = InputValidation.id_validation()
+        TournamentView.print_name(store, player5)
         player6 = InputValidation.id_validation()
+        TournamentView.print_name(store, player6)
         player7 = InputValidation.id_validation()
+        TournamentView.print_name(store, player7)
         player8 = InputValidation.id_validation()
+        TournamentView.print_name(store, player8)
 
         players_inputs = [player1, player2, player3, player4, player5, player6, player7, player8]
 
@@ -73,7 +96,6 @@ class TournamentView:
             'time_mode': time_mode_input,
             'description': description_input,
             'player_ids': players_inputs,
-            'spaces' : spaces,
         }
 
     @classmethod
@@ -82,10 +104,10 @@ class TournamentView:
         print("[                                      TOURNAMENT LIST                                       ]")
         print('----------------------------------------------------------------------------------------------')
         print("[                                                                                            ]")
-        print('[             ID      Name, Location                         Date            Time mode       ]')
+        print('[     ID          Name,                 Location              Date            Time mode      ]')
         print("[                                                                                            ]")
         for tournaments in tournament:
-            print(f'[             {tournaments.tournament_id}       {tournaments.name}, {tournaments.location}{space_town(tournaments)}  {tournaments.date}          {tournaments.time_mode}           ]')
+            print(f'[      {tournaments.tournament_id}{space_id(tournaments)}       {tournaments.name},{space_name(tournaments)} {tournaments.location}{space_town(tournaments)}  {tournaments.date}          {tournaments.time_mode}          ]')
         print("[                                                                                            ]")
         print('----------------------------------------------------------------------------------------------\n')
         print('    1. Start or Continue a Tournament            B. Back')
@@ -202,11 +224,9 @@ class TournamentView:
                 else :
                     print(f'    Winner : {tournament.rounds[-1].games[3].winner.fullname}\n')
 
-        print('\nB. Back')
-        print('H. Homepage')
+        print('\n\nB. Back                          A. Sort players by alphabetical order')
+        print('H. Homepage                      R. Sort players by rank')
         print('Q. Exit\n')
-        print('ALPHA. player by alpha')
-        print('RANK. player by rank\n')
         
         
         choice = input('Choice: ')
@@ -219,9 +239,9 @@ class TournamentView:
                 return 'h', None
             elif choice.lower() == 'q':
                 return 'q', None
-            elif choice.lower() == 'alpha':
+            elif choice.lower() == 'a':
                 return 'alpha', None
-            elif choice.lower() == 'rank':
+            elif choice.lower() == 'r':
                 return 'rank', None
         extra_info = None
 
@@ -242,22 +262,6 @@ class TournamentView:
             else:
                 break
             return choice, extra_info
-
-    @classmethod
-    def result(cls, tournament):
-        print('\n----------------------------------------------------------------------------------------------')
-        print("[                                   TOURNAMENT RESULTS                                       ]")
-        print('----------------------------------------------------------------------------------------------\n')
-        for player in tournament.players:
-            print(f'                {player.fullname} :{space(player)}{player.score}')
-        print('\nB. Back')
-        print('H. Homepage')
-        print('Q. Exit\n')
-
-        choice = input('Choice: ')
-        extra_info = None
-        
-        return choice, extra_info
-
+            
 
     

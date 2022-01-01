@@ -1,5 +1,12 @@
+from tinydb import TinyDB, Query
+from tinydb.queries import Query
+from tinydb.utils import T
 from models.tournament import Tournament
 from views.tournament_view import TournamentView
+
+db = TinyDB('db.json')
+players_table = db.table('tournaments')
+User = Query()
 
 
 class TournamentController:
@@ -32,9 +39,10 @@ class TournamentController:
             data["players"].append(player)
         del data["player_ids"]
         tournament = Tournament(**data)
+        players_table.insert(tournament.to_dict())
         store["curent_tournament"] = tournament
         store["tournaments"].append(tournament)
-        return "home_tournament", None
+        return "tournaments_list", None
 
     @classmethod
     def list_tournament(cls, store, route_params=None):

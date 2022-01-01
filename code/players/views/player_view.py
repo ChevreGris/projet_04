@@ -35,9 +35,9 @@ class PlayerView:
                   f'\t ]')
         print('    ---------------------------------------------------'
               '-----------------------------------\n')
-        print('    1. New player')
-        print('    2. Edit Player               H. Homepage')
-        print('    3. Delete Player             Q. Exit')
+        print('    1. New player              I. Sort plauers by id')
+        print('    2. Edit Player             A. Sort players by alphabetical order           H. Homepage')
+        print('    3. Delete Player           R. Sort players by rank                         Q. Exit')
         print('')
 
         choice = input('    Choice: ')
@@ -94,14 +94,13 @@ class PlayerView:
     def edit_player(cls, player):
         sp.call('clear', shell=True)
         print('Edit :\n')
-        print(f'     1. ID :            {player.id}')
-        print(f'     2. lastname :      {player.lastname}')
-        print(f'     3. firstname :     {player.firstname}')
-        print(f'     4. birthdate :     {player.birthdate}             '
+        print(f'     1. lastname :      {player.lastname}')
+        print(f'     2. firstname :     {player.firstname}')
+        print(f'     3. birthdate :     {player.birthdate}             '
               '              B. Back')
-        print(f'     5. sex :           {player.sex}                   '
+        print(f'     4. sex :           {player.sex}                   '
               '                 Q. Exit')
-        print(f'     6. ranking :       {player.ranking}               '
+        print(f'     5. ranking :       {player.ranking}               '
               '                  H. Homepage\n\n')
 
         choice = input('Choice: ')
