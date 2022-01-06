@@ -2,6 +2,14 @@ class HomeView:
 
     @classmethod
     def home(cls):
+        HomeView.chess_title()
+        print("    1. Players")
+        print("    2. Tournaments\n")
+        print("    Q. Exit\n")
+
+        return input("    Choice: ")
+        
+    def chess_title():
         print("\n")
         print("                      .d8888b.  888                                   888")
         print("                     d88P  Y88b 888                                   888")
@@ -13,11 +21,5 @@ class HomeView:
         print("                      'Y8888P'  888  888  'Y8888   88888P'  88888P'   Y8P")
         print("")
         print("----------------------------------------------------------------------------------------------")
-        print(" A chess tournament manager                                                          v0.08.00")
+        print(" A chess tournament manager                                                          v0.11.00")
         print("----------------------------------------------------------------------------------------------\n")
-        print("1. Players")
-        print("2. Tournaments\n")
-        print("Q. Exit\n")
-
-        return input("Choice: ")
-        

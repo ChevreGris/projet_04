@@ -1,5 +1,6 @@
 import subprocess as sp
 from input_validation import InputValidation
+from views.home_view import HomeView
 
 def space(player):
     #set the space betwin name and date in player menu
@@ -24,6 +25,8 @@ class PlayerView:
 
     @classmethod
     def home_player_list(cls, players):
+        HomeView.chess_title()
+        print('    List of all the players :')
         print('    ---------------------------------------------------'
               '-----------------------------------')
         print('    [\tId\tName\t\t\t\t\t  Birth date\tSex\tRanking  ]')
@@ -47,6 +50,8 @@ class PlayerView:
             try:
                 if choice == '2':
                     sp.call('clear', shell=True)
+                    HomeView.chess_title()
+                    print('    List of all the players :')
                     PlayerView.player_list(players)
                     extra_info = input(
                         '\nTo edit Player info : \n\nEnter Player Id (C. Cancel): '
@@ -57,6 +62,8 @@ class PlayerView:
                         return choice, int(extra_info)
                 elif choice == '3':
                     sp.call('clear', shell=True)
+                    HomeView.chess_title()
+                    print('    List of all the players :')
                     PlayerView.player_list(players)
                     extra_info = input(
                         '\nTo delete Player:\n\nEnter Player Id (C. Cancel): '
@@ -74,6 +81,7 @@ class PlayerView:
 
     @classmethod
     def create_player(cls):
+        HomeView.chess_title()
         id_input = InputValidation.id_validation()
         lastname_input = InputValidation.lastname_validation()
         firstname_input = InputValidation.firstname_validation()
@@ -93,7 +101,8 @@ class PlayerView:
     @classmethod
     def edit_player(cls, player):
         sp.call('clear', shell=True)
-        print('Edit :\n')
+        HomeView.chess_title()
+        print('Edit player info :\n')
         print(f'     1. lastname :      {player.lastname}')
         print(f'     2. firstname :     {player.firstname}')
         print(f'     3. birthdate :     {player.birthdate}             '

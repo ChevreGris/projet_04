@@ -17,25 +17,35 @@ class Tournament:
         self.scores = {}
 
     def to_dict(self):
-        players_ids = []
-        for player in self.players:
-            players_ids.append(player.id)
-
-        rounds = []
-        for round in self.rounds:
-            rounds.append(Round.to_dict(round))
-
         return {
-                 'tournament_id': self.tournament_id, 
+                 'tournament_id': self.tournament_id,
                  'name': self.name,
                  'location': self.location,
                  'date': self.date,
-                 'round': rounds,
+                 'round': [round.to_dict() for round in self.rounds],
                  'time_mode': self.time_mode,
                  'description': self.description,
-                 'players': players_ids,
-                 #'scores': self.scores
+                 'players': [player.id for player in self.players],
+                 'scores': self.scores
                  }
+        
+    @classmethod
+    def from_dict(cls, store, tournament_dict):
+        players_from_ids = []
+        for id in tournament_dict['players']:
+            for p in store["players"]:
+                if str(p.id) == str(id):
+                    players_from_ids.append(p)
+    
+        tournament = Tournament(
+                      tournament_dict['tournament_id'], tournament_dict['name'],
+                      tournament_dict['location'], tournament_dict['date'],
+                      tournament_dict['time_mode'], tournament_dict['description'],
+                      players_from_ids
+                     )
+        tournament.rounds = Round.from_dict(store, tournament_dict['round'])
+        tournament.scores = tournament_dict['scores']
+        return tournament
 
     def set_winner(self, winner, game):
         if winner == 1:

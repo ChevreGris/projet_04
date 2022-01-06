@@ -32,7 +32,7 @@ class PlayerController:
             store["players"] = sorted(store["players"], key=lambda x:(int(x.ranking)), reverse=True)
             return "home_player", None
         elif choice.lower() == "i":
-            store["players"] = sorted(store["players"], key=lambda x:(x.id))
+            store["players"] = sorted(store["players"], key=lambda x:(int(x.id)))
             return "home_player", None
         else:
             print("invalid value ")
@@ -48,10 +48,10 @@ class PlayerController:
 
     def refresh_instance(store):
         store["players"] = []
-        instance = []
+        player_instance = []
         for player in players_table.all():
-            instance.append(Player.from_dict(player))
-        store["players"] = instance
+            player_instance.append(Player.from_dict(player))
+        store["players"] = player_instance
 
     @classmethod
     def delete(cls, store, route_params):

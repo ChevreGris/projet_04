@@ -1,6 +1,7 @@
 from input_validation import InputValidation
 from views.player_view import PlayerView
 from models.player import Player
+from views.home_view import HomeView
 import subprocess as sp
 
 def space(player):
@@ -20,33 +21,26 @@ def space_id(tournaments):
     max_lenght = 4 - len(str(tournaments.tournament_id))
     return " " * max_lenght
 
+def win(winner, player):
+    if winner == None:
+        return' '
+    if winner == False:
+        return'♦︎'
+    elif winner.id == player.id:
+        return'♦︎'
+    else:
+        return' '
+
 class TournamentView:
 
     @classmethod
     def home_tournament_page(cls):
+        HomeView.chess_title()
+        print('    Home Tournament \n')
+        print('    1. New Tournament                            H. Homepage')
+        print('    2. Tournament list                           Q. Exit\n')
 
-        print("\n")
-        print("                      .d8888b.  888                                   888")
-        print("                     d88P  Y88b 888                                   888")
-        print("                     888    888 888                                   888")
-        print("                     888        88888b.   .d88b.  .d8888b  .d8888b    888")
-        print('                     888        888 "88b d8P  Y8b 88K      88K        Y8P')
-        print('                     888    888 888  888 88888888 "Y8888b. "Y8888b.      ')
-        print("                     Y88b  d88P 888  888 Y8b.          X88      X88   d8b")
-        print("                      'Y8888P'  888  888  'Y8888   88888P'  88888P'   Y8P")
-        print("")
-        print("----------------------------------------------------------------------------------------------")
-        print(" A chess tournament manager                                                          v0.08.00")
-        print("----------------------------------------------------------------------------------------------\n")
-        print('Home Tournament \n')
-        print('1. New Tournament')
-        print('2. Tournament list')
-        print('3. See Ended Tournament\n')
-        print('H. Homepage')
-        print('Q. Exit\n')
-
-
-        choice = input('Choice: ')
+        choice = input('    Choice: ')
         return choice
 
     def print_name(store, player1):
@@ -59,6 +53,7 @@ class TournamentView:
 
     @classmethod
     def new_tournament_page(cls, store):
+        HomeView.chess_title()
         id_input = InputValidation.id_validation()
         name_input = InputValidation.name_validation()
         location_input = InputValidation.location_validation()
@@ -67,6 +62,7 @@ class TournamentView:
         description_input = InputValidation.description_validation()
         
         sp.call('clear', shell=True)
+        HomeView.chess_title()
         PlayerView.player_list(store["players"])
 
         player1 = InputValidation.id_validation()
@@ -100,20 +96,21 @@ class TournamentView:
 
     @classmethod
     def tournament_list(cls, tournament):
-        print('----------------------------------------------------------------------------------------------')
-        print("[                                      TOURNAMENT LIST                                       ]")
-        print('----------------------------------------------------------------------------------------------')
-        print("[                                                                                            ]")
-        print('[     ID          Name,                 Location              Date            Time mode      ]')
-        print("[                                                                                            ]")
+        HomeView.chess_title()
+        print('    --------------------------------------------------------------------------------------')
+        print("    [                                  TOURNAMENT LIST                                   ]")
+        print('    --------------------------------------------------------------------------------------')
+        print("    [                                                                                    ]")
+        print('    [  ID         Name,                 Location              Date            Time mode  ]')
+        print("    [                                                                                    ]")
         for tournaments in tournament:
-            print(f'[      {tournaments.tournament_id}{space_id(tournaments)}       {tournaments.name},{space_name(tournaments)} {tournaments.location}{space_town(tournaments)}  {tournaments.date}          {tournaments.time_mode}          ]')
-        print("[                                                                                            ]")
-        print('----------------------------------------------------------------------------------------------\n')
+            print(f'    [  {tournaments.tournament_id}{space_id(tournaments)}       {tournaments.name},{space_name(tournaments)} {tournaments.location}{space_town(tournaments)}  {tournaments.date}          {tournaments.time_mode}      ]')
+        print("    [                                                                                    ]")
+        print('    --------------------------------------------------------------------------------------\n')
         print('    1. Start or Continue a Tournament            B. Back')
-        print('    2. Tournament details                        H. Homepage')
-        print('                                                 Q. Exit\n')
-        choice = input('Choice: ')
+        print('    2. See Tournament details                    H. Homepage')
+        print('    3. Delete Tournament                         Q. Exit\n')
+        choice = input('    Choice: ')
         extra_info = None
 
         while True:
@@ -123,7 +120,7 @@ class TournamentView:
                         'Enter Tournament Id to see Details (C. Cancel): '
                     )
                     if extra_info.lower() == 'c':
-                        return 'home_player', None
+                        return 'tournaments_list', None
                     else:
                         return choice, int(extra_info)
                 elif choice == '1':
@@ -131,7 +128,15 @@ class TournamentView:
                         'Enter Tournament Id to Start or Continue the Tournament (C. Cancel): '
                     )
                     if extra_info.lower() == 'c':
-                        return 'home_player', None
+                        return 'tournaments_list', None
+                    else:
+                        return choice, int(extra_info)
+                elif choice == '3':
+                    extra_info = input(
+                        'Enter Tournament Id to delete it (C. Cancel): '
+                    )
+                    if extra_info.lower() == 'c':
+                        return 'tournaments_list', None
                     else:
                         return choice, int(extra_info)
             except ValueError:
@@ -143,6 +148,7 @@ class TournamentView:
 
     @classmethod
     def tournament_details(cls, tournament):
+        HomeView.chess_title()
         print('----------------------------------------------------------------------------------------------')
         print("[                                   TOURNAMENT DESCRIPTION                                   ]")
         print('----------------------------------------------------------------------------------------------\n')
@@ -154,17 +160,18 @@ class TournamentView:
         print(f'    Description : {tournament.description}\n')
         print('    Players :')
         PlayerView.player_list(tournament.players)
-        print('B. Back')
-        print('H. Homepage')
-        print('Q. Exit\n')
+        print('    B. Back')
+        print('    H. Homepage')
+        print('    Q. Exit\n')
 
-        choice = input('Choice: ')
+        choice = input('    Choice: ')
         extra_info = None
         
         return choice, extra_info
 
     @classmethod
     def start_tournament_page(cls, tournament):
+        HomeView.chess_title()
         print('----------------------------------------------------------------------------------------------')
         print("[                                   TOURNAMENT DESCRIPTION                                   ]")
         print('----------------------------------------------------------------------------------------------\n')
@@ -181,12 +188,12 @@ class TournamentView:
             print('----------------------------------------------------------------------------------------------')
             print(f"[                                        {round.name.upper()}                                             ]")
             print('----------------------------------------------------------------------------------------------')
-            print('[  Game:  Player Id and Name:              VS              Player Id and Name:               ]')
+            print('[  Game:  Player Id and Name:                VS            Player Id and Name:               ]')
             print('[                                                                                            ]')
             game_num = 0
             for game in round.games:
                 game_num += 1
-                print(f'[   ({game_num})   {game.player1.id} {game.player1.fullname}{space(game.player1)}vs              {game.player2.id} {game.player2.fullname}{space(game.player2)} ]')
+                print(f'[   ({game_num})   {game.player1.id} {game.player1.fullname} {win(game.winner, game.player1)}{space(game.player1)}vs          {win(game.winner, game.player2)} {game.player2.id} {game.player2.fullname}{space(game.player2)} ]')
             print('----------------------------------------------------------------------------------------------\n')
             print('\n')
         if tournament.finished_tournament():

@@ -5,7 +5,7 @@ from models.tournament import Tournament
 from views.tournament_view import TournamentView
 
 db = TinyDB('db.json')
-players_table = db.table('tournaments')
+tournaments_table = db.table('tournaments')
 User = Query()
 
 
@@ -39,7 +39,7 @@ class TournamentController:
             data["players"].append(player)
         del data["player_ids"]
         tournament = Tournament(**data)
-        players_table.insert(tournament.to_dict())
+        tournaments_table.insert(tournament.to_dict())
         store["curent_tournament"] = tournament
         store["tournaments"].append(tournament)
         return "tournaments_list", None
@@ -52,6 +52,8 @@ class TournamentController:
             return "tournament_detail", tournament_id
         elif choice == "1":
             return "tournament_start", tournament_id
+        elif choice == "3":
+            return "delete_tournament", tournament_id
         elif choice == "q":
             next = "quit"
         elif choice == "h":
@@ -62,10 +64,27 @@ class TournamentController:
             print("invalid value")
             next = "tournaments_list"
         return next, None
+    
+    @classmethod
+    def delete(cls, store, route_params):
+        tournaments_table.remove(User.tournament_id == str(route_params))
+        TournamentController.refresh_instance(store)
+
+        return "tournaments_list", None
+    
+    def refresh_instance(store):
+        store["tournaments"] = []
+        tournament_instance = []
+        for tournament in tournaments_table.all():
+            tournament_instance.append(Tournament.from_dict(store, tournament))
+        store["tournaments"] = tournament_instance
 
     @classmethod
     def details_tournament(cls, store, route_params):
-        tournament = next(t for t in store["tournaments"] if str(t.tournament_id) == str(route_params))
+        for t in store["tournaments"]:
+            if str(t.tournament_id) == str(route_params):
+                tournament = t
+
         choice = TournamentView.tournament_details(tournament)
 
         if choice == "q":
@@ -73,10 +92,10 @@ class TournamentController:
         elif choice == "h":
             next_ = "homepage"
         elif choice == "b":
-            return "tournaments_list", None
+            next_ = "tournaments_list"
         else:
             print("invalid value")
-            next_ = "tournament_detail"
+            return "tournament_detail", tournament
         return next_, None
 
     @classmethod
@@ -86,6 +105,9 @@ class TournamentController:
             tournament.start_round()
         if tournament.rounds[-1].finished() and not tournament.finished_tournament():
             tournament.start_other_round()
+
+        tournament_query = Query()
+        tournaments_table.update(tournament.to_dict(), tournament_query.tournament_id == str(route_params))
 
         choice, extra_info = TournamentView.start_tournament_page(tournament)
         
@@ -126,6 +148,3 @@ class TournamentController:
         choice, extra_info = TournamentView.start_tournament_page(tournament)
         return next_, None
 
-    @classmethod
-    def tournament_ended(cls, store, route_params):
-        pass

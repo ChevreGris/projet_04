@@ -6,6 +6,9 @@ from models.player import Player
 from models.tournament import Tournament
 from controllers.tournament_controller import TournamentController
 
+db = TinyDB('db.json')
+players_table = db.table('players')
+tournaments_table = db.table('tournaments')
 
 class Application:
 
@@ -17,42 +20,29 @@ class Application:
         "edit_player": PlayerController.edit,
         "home_tournament": TournamentController.home_tournament,
         "new_tournament": TournamentController.create_tournament,
+        "delete_tournament": TournamentController.delete,
         "tournament_detail": TournamentController.details_tournament,
         "tournaments_list": TournamentController.list_tournament,
         "tournament_start": TournamentController.start_tournament,
-        "ended_tournament": TournamentController.tournament_ended,
     }
 
     def __init__(self) -> None:
         self.route = "homepage"
         self.exit = False
         self.route_params = None
-        players = [
-            Player(1, "PICASSO", "Pablo", "25/10/1881", "M", 994),
-            Player(2, "ANGELO", "Michel", "06/03/1475", "M", 2143),
-            Player(8, "DEGAULLE", "Charles", "06/03/1475", "M", 2143),
-            Player(4, "BACH", "Jean Sébastien", "06/03/1475", "M", 2143),
-            Player(5, "DEBUSSY", "Claude", "25/10/1881", "M", 994),
-            Player(6, "SATIE", "Erik", "06/03/1475", "M", 2143),
-            Player(3, "MOZART", "Amadeus", "25/10/1881", "M", 900),
-            Player(7, "CURIE", "Marie", "25/10/1881", "f", 994),   
-        ]
-        tournament = Tournament(1, "Test 1 tournois", "Marseille", "25/10/2021", "a", "Test description", players)
-        db = TinyDB('db.json')
-        players_table = db.table('players')
-        instance = []
+        
+        player_instance = []
         for player in players_table.all():
-            instance.append(Player.from_dict(player))
-
+            player_instance.append(Player.from_dict(player))
+        tournament_instance = []
+        
         self.store = {
-            "players": instance,
-            
-            "tournaments": [
-                tournament,
-                Tournament(2, "Test 2 tournois", "Paris", "25/10/2021", "B", "Test description", players),
-                Tournament(3, "Test 3 tournois", "Lille", "25/10/2021", "a", "Test description", players),
-            ],
+            "players": player_instance,
+            "tournaments": tournament_instance,
         }
+        
+        for tournament in tournaments_table.all():
+            tournament_instance.append(Tournament.from_dict(self.store, tournament))
 
     def run(self):
         while not self.exit:
