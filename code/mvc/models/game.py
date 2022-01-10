@@ -1,29 +1,24 @@
-from models.player import Player
-
-
 class Game:
-    def __init__(self, player1, player2 ) -> None:
+    def __init__(self, player1, player2) -> None:
         self.player1 = player1
         self.player2 = player2
         self.winner = None
 
     def to_dict(self):
-        if self.winner == None:
+        if self.winner is None:
             id = self.winner
-        elif self.winner == False:
+        elif self.winner is False:
             id = False
         else:
             id = self.winner.id
-        
+
         return {
             'player1': self.player1.id,
             'player2': self.player2.id,
             'winner': id
         }
 
-        
-
-    @classmethod    
+    @classmethod
     def from_dict(cls, store, game_dict):
         games = []
         winner = None
@@ -37,14 +32,13 @@ class Game:
                     player2 = p
                 if str(p.id) == str(g['winner']):
                     winner = p
-                elif g['winner'] == None:
+                elif g['winner'] is None:
                     winner = None
-                elif g['winner'] == False:
+                elif g['winner'] is False:
                     winner = False
 
-                
             game = Game(player1=player1, player2=player2)
             game.winner = winner
             games.append(game)
-        
+
         return games

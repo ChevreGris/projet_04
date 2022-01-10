@@ -2,10 +2,10 @@ from exceptions import InputException
 
 
 class InputValidation():
-    
+
     @classmethod
     def id_validation(self):
-        #Error management and input validation for the ID input
+        # Error management and input validation for the ID input
         while True:
             id_input = input('Enter an ID: ')
             try:
@@ -18,12 +18,11 @@ class InputValidation():
                 print('error, must be a number.')
             else:
                 break
-
         return id_input
 
     @classmethod
     def name_validation(self):
-        #Error management and input validation for the Name input
+        # Error management and input validation for the Name input
         while True:
             name_input = input("Enter Tournament's name: ")
             try:
@@ -39,12 +38,11 @@ class InputValidation():
                 print(f'error : {str(e)}')
             else:
                 break
-
         return name_input
 
     @classmethod
     def location_validation(self):
-        #Error management and input validation for the Location input
+        # Error management and input validation for the Location input
         while True:
             location_input = input('Enter Tournament location: ')
             try:
@@ -64,12 +62,11 @@ class InputValidation():
                 print(f'error : {str(e)}')
             else:
                 break
-
         return location_input
 
     @classmethod
     def date_validation(self):
-        #Error management and input validation for the Date input
+        # Error management and input validation for the Date input
         while True:
             date_input = input('Enter date (DD/MM/YYYY): ')
             try:
@@ -93,14 +90,14 @@ class InputValidation():
                 print(f'error : {str(e)}')
             else:
                 break
-
         return date_input
 
     @classmethod
     def time_mode_validation(self):
-        #Error management and input validation for the Time mode input
+        # Error management and input validation for the Time mode input
         while True:
-            time_mode_input = input('Enter time mode (A : Bullet, B : Blitz or C : Quick_it):')
+            time_mode_input = input('Enter time mode (A : Bullet, B : B'
+                                    'litz or C : Quick_it):')
             try:
                 if time_mode_input == 'A':
                     break
@@ -115,34 +112,36 @@ class InputValidation():
                 elif time_mode_input == 'c':
                     break
                 else:
-                    raise InputException('invalid time mode(must be "A", "B" or "C").')
-            except InputException as e:
-                    print(f'error : {str(e)}')
-            else:
-                break
-
-        return time_mode_input
-            
-    @classmethod
-    def description_validation(self):
-        #Error management and input validation for the description input
-        while True:
-            description_input = input('Enter description of the tournament:')
-            try:
-                if len(description_input) > 99:
-                    raise InputException('description too long, max 99 caracter.')
-                elif len(description_input) < 3:
-                    raise InputException('description too short, min 3 caracter.')
+                    raise InputException('invalid time mode(must be "A",'
+                                         ' "B" or "C").')
             except InputException as e:
                 print(f'error : {str(e)}')
             else:
                 break
+        return time_mode_input
 
+    @classmethod
+    def description_validation(self):
+        # Error management and input validation for the description input
+        while True:
+            description_input = input('Enter description of the tourname'
+                                      'nt:')
+            try:
+                if len(description_input) > 99:
+                    raise InputException('description too long, max 99 c'
+                                         'aracter.')
+                elif len(description_input) < 3:
+                    raise InputException('description too short, min 3 c'
+                                         'aracter.')
+            except InputException as e:
+                print(f'error : {str(e)}')
+            else:
+                break
         return description_input
 
     @classmethod
     def lastname_validation(self):
-        #Error management and input validation for the Lastname input
+        # Error management and input validation for the Lastname input
         while True:
             lastname_input = input('Enter your lastname: ')
             try:
@@ -150,7 +149,6 @@ class InputValidation():
                     raise InputException(
                         'invalid lastname, must only contain letters.'
                     )
-
                 elif len(lastname_input) > 15:
                     raise InputException(
                         'Lastname too long (max 15 caracter).'
@@ -163,12 +161,11 @@ class InputValidation():
                 print(f'error : {str(e)}')
             else:
                 break
-
         return lastname_input
 
     @classmethod
     def firstname_validation(self):
-        #Error management and input validation for the Firstname input
+        # Error management and input validation for the Firstname input
         while True:
             firstname_input = input('Enter your firstname: ')
             try:
@@ -188,12 +185,11 @@ class InputValidation():
                 print(f'error : {str(e)}')
             else:
                 break
-        
         return firstname_input
 
     @classmethod
     def birthdate_validation(self):
-        #Error management and input validation for the Birthdate input
+        # Error management and input validation for the Birthdate input
         while True:
             birthdate_input = input('Enter birthdate (DD/MM/YYYY): ')
             try:
@@ -212,18 +208,18 @@ class InputValidation():
                 elif '19' not in birthdate_input:
                     if '20' not in birthdate_input:
                         raise InputException(
-                            'Birthday incorect (year must be in 1900 OR 2000).'
+                            'Birthday incorect (year must be in 1900 OR '
+                            '2000).'
                         )
             except InputException as e:
                 print(f'error : {str(e)}')
             else:
                 break
-
         return birthdate_input
 
     @classmethod
     def sex_validation(self):
-        #Error management and input validation for the Sex input
+        # Error management and input validation for the Sex input
         while True:
             sex_input = input('Enter your sex (F or M): ')
             try:
@@ -236,17 +232,17 @@ class InputValidation():
                 elif sex_input == 'f':
                     break
                 else:
-                    raise InputException('Sex invalid (must be "M" or "F").')
+                    raise InputException('Sex invalid (must be "M" or "F'
+                                         '").')
             except InputException as e:
                 print(f'error : {str(e)}')
             else:
                 break
-
         return sex_input
 
     @classmethod
     def ranking_validation(self):
-        #Error management and input validation for the Ranking input
+        # Error management and input validation for the Ranking input
         while True:
             ranking_input = input('Enter ranking: ')
             try:
@@ -265,7 +261,4 @@ class InputValidation():
                 print('error, must be a number.')
             else:
                 break
-
         return ranking_input
-
-    

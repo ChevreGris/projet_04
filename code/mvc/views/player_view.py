@@ -2,12 +2,15 @@ import subprocess as sp
 from input_validation import InputValidation
 from views.home_view import HomeView
 
+
 def space(player):
-    #set the space betwin name and date in player menu
+    # set the space betwin name and date in player menu
     max_lenght = 30 - len(player.lastname + player.firstname)
     return " " * max_lenght
 
+
 class PlayerView:
+
     @classmethod
     def player_list(cls, players):
         print('    ---------------------------------------------------'
@@ -17,9 +20,9 @@ class PlayerView:
               '-----------------------------------')
 
         for player in players:
-            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}{space(player)}'
-                  f'           {player.birthdate}\t {player.sex}\t{player.ranking}'
-                  f'\t ]')
+            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}'
+                  f'{space(player)}           {player.birthdate}\t '
+                  f'{player.sex}\t{player.ranking}\t ]')
         print('    ---------------------------------------------------'
               '-----------------------------------\n')
 
@@ -33,14 +36,16 @@ class PlayerView:
         print('    ---------------------------------------------------'
               '-----------------------------------')
         for player in players:
-            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}{space(player)}'
-                  f'           {player.birthdate}\t {player.sex}\t{player.ranking}'
-                  f'\t ]')
+            print(f'    [\t{player.id}\t{player.lastname} {player.firstname}'
+                  f'{space(player)}           {player.birthdate}\t '
+                  f'{player.sex}\t{player.ranking}\t ]')
         print('    ---------------------------------------------------'
               '-----------------------------------\n')
         print('    1. New player              I. Sort plauers by id')
-        print('    2. Edit Player             A. Sort players by alphabetical order           H. Homepage')
-        print('    3. Delete Player           R. Sort players by rank                         Q. Exit')
+        print('    2. Edit Player             A. Sort players by alpha'
+              'betical order           H. Homepage')
+        print('    3. Delete Player           R. Sort players by rank '
+              '                        Q. Exit')
         print('')
 
         choice = input('    Choice: ')
@@ -54,7 +59,8 @@ class PlayerView:
                     print('    List of all the players :')
                     PlayerView.player_list(players)
                     extra_info = input(
-                        '\nTo edit Player info : \n\nEnter Player Id (C. Cancel): '
+                        '\nTo edit Player info : \n\nEnter Player Id ('
+                        'C. Cancel): '
                     )
                     if extra_info.lower() == 'c':
                         return 'home_player', None
@@ -66,7 +72,8 @@ class PlayerView:
                     print('    List of all the players :')
                     PlayerView.player_list(players)
                     extra_info = input(
-                        '\nTo delete Player:\n\nEnter Player Id (C. Cancel): '
+                        '\nTo delete Player:\n\nEnter Player Id (C. Can'
+                        'cel): '
                     )
                     if extra_info.lower() == 'c':
                         return 'home_player', None
@@ -76,7 +83,6 @@ class PlayerView:
                 print("invalid value")
             else:
                 break
-
         return choice, extra_info
 
     @classmethod
@@ -110,9 +116,6 @@ class PlayerView:
         print(f'     4. sex :           {player.sex}                   '
               '                 Q. Exit')
         print(f'     5. ranking :       {player.ranking}               '
-              '                  H. Homepage\n\n')
-
+              '                   H. Homepage\n\n')
         choice = input('Choice: ')
         return choice
-
-

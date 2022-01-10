@@ -1,6 +1,5 @@
-from tinydb import TinyDB, Query
+from tinydb import TinyDB
 from tinydb.queries import Query
-from tinydb.utils import T
 from models.player import Player
 from views.player_view import PlayerView
 from input_validation import InputValidation
@@ -9,8 +8,8 @@ db = TinyDB('db.json')
 players_table = db.table('players')
 User = Query()
 
-class PlayerController:
 
+class PlayerController:
     @classmethod
     def home_list(cls, store, route_params=None):
         choice, player_id = PlayerView.home_player_list(store["players"])
@@ -26,13 +25,17 @@ class PlayerController:
         elif choice.lower() == "h":
             return "homepage", None
         elif choice.lower() == "a":
-            store["players"] = sorted(store["players"], key=lambda x:(x.lastname))
+            store["players"] = sorted(store["players"],
+                                      key=lambda x: (x.lastname))
             return "home_player", None
         elif choice.lower() == "r":
-            store["players"] = sorted(store["players"], key=lambda x:(int(x.ranking)), reverse=True)
+            store["players"] = sorted(store["players"],
+                                      key=lambda x: (int(x.ranking)),
+                                      reverse=True)
             return "home_player", None
         elif choice.lower() == "i":
-            store["players"] = sorted(store["players"], key=lambda x:(int(x.id)))
+            store["players"] = sorted(store["players"],
+                                      key=lambda x: (int(x.id)))
             return "home_player", None
         else:
             print("invalid value ")
@@ -69,30 +72,35 @@ class PlayerController:
                 pass
 
         choice = PlayerView.edit_player(player)
-        
+
         if choice.lower() == "1":
             lastname_input = InputValidation.lastname_validation()
-            players_table.update({"lastname" : lastname_input}, User.id == str(route_params))
+            players_table.update({"lastname": lastname_input},
+                                 User.id == str(route_params))
             PlayerController.refresh_instance(store)
             return "edit_player", route_params
         elif choice.lower() == "2":
             firstname_input = InputValidation.firstname_validation()
-            players_table.update({"firstname" : firstname_input}, User.id == str(route_params))
+            players_table.update({"firstname": firstname_input},
+                                 User.id == str(route_params))
             PlayerController.refresh_instance(store)
             return "edit_player", route_params
         elif choice.lower() == "3":
             birthdate_input = InputValidation.birthdate_validation()
-            players_table.update({"birthdate" : birthdate_input}, User.id == str(route_params))
+            players_table.update({"birthdate": birthdate_input},
+                                 User.id == str(route_params))
             PlayerController.refresh_instance(store)
             return "edit_player", route_params
         elif choice.lower() == "4":
             sex_input = InputValidation.sex_validation()
-            players_table.update({"sex" : sex_input}, User.id == str(route_params))
+            players_table.update({"sex": sex_input},
+                                 User.id == str(route_params))
             PlayerController.refresh_instance(store)
             return "edit_player", route_params
         elif choice.lower() == "5":
             ranking_input = InputValidation.ranking_validation()
-            players_table.update({"ranking" : ranking_input}, User.id == str(route_params))
+            players_table.update({"ranking": ranking_input},
+                                 User.id == str(route_params))
             PlayerController.refresh_instance(store)
             return "edit_player", route_params
 
